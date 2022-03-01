@@ -1,0 +1,9 @@
+.text-custom {
+    color: #e67e22;
+}
+.bg-custom {
+    background-color: #e67e22;
+}
+#item-details {
+    display: none;
+}
