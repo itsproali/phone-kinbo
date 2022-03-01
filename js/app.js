@@ -7,6 +7,7 @@ const phonesContainer = document.getElementById('display-phones');
 const searchField = document.getElementById('search-field');
 const searchButton = document.getElementById('button-addon2');
 const itemDetails = document.getElementById('item-details');
+const spinner = document.getElementById('spinner');
 
 /* Load phones before Search */
 // Apple
@@ -36,12 +37,13 @@ const displayPhones = (parentContainer, sliced) => {
             <div class="card-body">
               <h5 class="card-title">${phone.phone_name}</h5>
               <p >${phone.brand}</p>
-              <button onclick="loadItemDetails('${phone.slug}')" class="btn btn-outline-warning px-4">Details</button>
+              <button onclick="loadItemDetails('${phone.slug}')" class="custom-btn">Details</button>
             </div>
           </div>
         `;
         parentContainer.appendChild(div);
     })
+    spinner.textContent = '';
 }
 
 /* Display Phones Before Search */
@@ -115,14 +117,17 @@ const displayItemDetails = details => {
                 <li class="mb-0"><b>ChipSet:</b> ${details?.mainFeatures?.chipSet}</li>
                 <li class="mb-0"><b>Display:</b> ${details?.mainFeatures?.displaySize}</li>
                 <li class="mb-0"><b>Memory:</b> ${details?.mainFeatures?.memory}</li>
-                <li class="mb-0"><b>Sensor:</b> ${details?.mainFeatures?.displaySize}</li>
+                <li class="mb-0"><b>Sensor:</b> ${details?.mainFeatures?.sensors}</li>
            </ul>
            <h5 class="mt-1">Others:</h5>
            <ul>
+           <li class="mb-0"><b>USB:</b> ${details?.others?.USB}</li>
                 <li class="mb-0"><b>WLAN:</b> ${details?.others?.WLAN}</li>
                 <li class="mb-0"><b>Bluetooth:</b> ${details?.others?.Bluetooth}</li>
-                <li class="mb-0"><b>USB:</b> ${details?.others?.USB}</li>
+                <li class="mb-0"><b>GPS:</b> ${details?.others?.GPS}</li>
+                <li class="mb-0"><b>Radio:</b> ${details?.others?.Radio}</li>
            </ul>
+           <button class="custom-btn" onclick="alert('We will add this feature soon ....')">Buy Now</button>
         </div>
     </div>
     `;
