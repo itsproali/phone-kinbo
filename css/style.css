@@ -4,6 +4,12 @@
 .bg-custom {
     background-color: #e67e22;
 }
+.navbar-brand {
+    cursor: pointer;
+}
+.alert {
+    display: none;
+}
 #item-details {
     display: none;
 }

@@ -1,19 +1,32 @@
 // Dom Selectors
 const mainContainer = document.getElementById('main-container');
 const applePhones = document.getElementById('apple-phones');
+const samsungPhones = document.getElementById('samsung-phones');
+const oppoPhones = document.getElementById('oppo-phones');
 const phonesContainer = document.getElementById('display-phones');
 const searchField = document.getElementById('search-field');
 const searchButton = document.getElementById('button-addon2');
 const itemDetails = document.getElementById('item-details');
 
-// Load phones before Search
+/* Load phones before Search */
+// Apple
 fetch(`https://openapi.programming-hero.com/api/phones?search=${'iphone'}`)
     .then(res => res.json())
     .then(data => displayApples(data));
 
-// Display Phones Before Search
-const displayApples = phones => {
-    const sliced = phones.data.slice(0, 6);
+// Samsung
+fetch(`https://openapi.programming-hero.com/api/phones?search=${'samsung'}`)
+    .then(res => res.json())
+    .then(data => displaySamsung(data));
+
+// Oppo
+fetch(`https://openapi.programming-hero.com/api/phones?search=${'oppo'}`)
+    .then(res => res.json())
+    .then(data => displayOppo(data));
+
+
+// Common Function to display phones
+const displayPhones = (parentContainer, sliced) => {
     sliced.forEach(phone => {
         const div = document.createElement('div');
         div.classList.add('col');
@@ -27,44 +40,49 @@ const displayApples = phones => {
             </div>
           </div>
         `;
-        applePhones.appendChild(div);
+        parentContainer.appendChild(div);
     })
+}
+
+/* Display Phones Before Search */
+// Apple Phones
+const displayApples = phones => {
+    const sliced = phones.data.slice(0, 6);
+    displayPhones(applePhones, sliced);
+}
+
+// Samsung Phones
+const displaySamsung = phones => {
+    const sliced = phones.data.slice(0, 6);
+    displayPhones(samsungPhones, sliced);
+}
+
+// Oppo Phones
+const displayOppo = phones => {
+    const sliced = phones.data.slice(0, 6);
+    displayPhones(oppoPhones, sliced);
 }
 
 // Search Phone
 const searchPhone = () => {
     fetch(`https://openapi.programming-hero.com/api/phones?search=${searchField.value}`)
         .then(res => res.json())
-        .then(data => displayPhones(data));
+        .then(data => displaySearchResult(data));
     searchField.value = '';
 }
 
 // Display Phones
-const displayPhones = phones => {
+const displaySearchResult = phones => {
     phonesContainer.textContent = '';
     itemDetails.textContent = '';
     itemDetails.style.display = 'none';
-    document.getElementById('all-phones').textContent = '';
     if (phones.status === false) {
-        alert('Your Search Result not Found')
+        document.getElementById('alert').style.display = 'block';
     } else {
+        document.getElementById('all-phones').textContent = '';
+        document.getElementById('alert').style.display = 'none';
         const sliced = phones.data.slice(0, 20);
-        sliced.forEach(phone => {
-            // console.log(phone);
-            const div = document.createElement('div');
-            div.classList.add('col');
-            div.innerHTML = `
-            <div class="card h-100 shadow p-2">
-            <img src="${phone.image}" class="card-img-top h-75 w-auto mx-auto" alt="${phone.phone_name}">
-            <div class="card-body">
-              <h5 class="card-title">${phone.phone_name}</h5>
-              <p >${phone.brand}</p>
-              <button onclick="loadItemDetails('${phone.slug}')" class="btn btn-outline-warning px-4">Details</button>
-            </div>
-          </div>
-        `;
-            phonesContainer.appendChild(div);
-        })
+        displayPhones(phonesContainer, sliced);
     }
 }
 
@@ -78,22 +96,32 @@ const loadItemDetails = itemDetails => {
 // Display Details
 const displayItemDetails = details => {
     console.log(details);
+    location = '#item-details';
     itemDetails.textContent = '';
     itemDetails.style.display = 'block';
     const div = document.createElement('div');
-    div.classList.add('row', 'g-0')
+    div.classList.add('row', 'g-0', 'align-items-center')
     div.innerHTML = `
-    <div class="col-md-4">
-        <img src="${details.image}" class="img-fluid rounded-start mx-auto" alt="${details.phone_name}">
-    </div>
-    <div class="col-md-8">
-        <div class="card-body">
-            <h5 class="card-title text-custom">${details.name}</h5>
-           <h6>Brand: ${details.brand}</h6>
-           <h6>${releaseDate(details.releaseDate)}</h6>
+    <div class="col-12 col-md-5 text-center">
+        <img src="${details.image}" class="card-img-top w-75" alt="${details.name}">
+        <h6 class="mt-2">${releaseDate(details.releaseDate)}</h6>
+        </div>
+       <div class="col-12 col-md-7">
+       <div class="card-body">
+       <h3 class="text-custom">${details?.name}</h3>
+       <h5">Brand: ${details?.brand}</h5>
+       <h4 class="mt-2">Product Details:</h4>
            <ul>
-           <li class="mb-0">ChipSet: ${details.mainFeatures.chipSet}</li>
-           <li class="mb-0">Display: ${details.mainFeatures.displaySize}</li>
+                <li class="mb-0"><b>ChipSet:</b> ${details?.mainFeatures?.chipSet}</li>
+                <li class="mb-0"><b>Display:</b> ${details?.mainFeatures?.displaySize}</li>
+                <li class="mb-0"><b>Memory:</b> ${details?.mainFeatures?.memory}</li>
+                <li class="mb-0"><b>Sensor:</b> ${details?.mainFeatures?.displaySize}</li>
+           </ul>
+           <h5 class="mt-1">Others:</h5>
+           <ul>
+                <li class="mb-0"><b>WLAN:</b> ${details?.others?.WLAN}</li>
+                <li class="mb-0"><b>Bluetooth:</b> ${details?.others?.Bluetooth}</li>
+                <li class="mb-0"><b>USB:</b> ${details?.others?.USB}</li>
            </ul>
         </div>
     </div>
