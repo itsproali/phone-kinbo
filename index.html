@@ -15,19 +15,22 @@
 <body>
 
     <!-- Search Phone -->
-<section class="container">
-    <div class="w-75 input-group my-3 mx-auto">
-        <input id="search-field" type="text" class="form-control border-warning" placeholder="Search your dream phone..." aria-label="Recipient's username"
-            aria-describedby="button-addon2">
-        <button onclick="searchPhone()" class="btn btn-outline-warning" type="button" id="button-addon2">Button</button>
-    </div>
-</section>
-
-<main class="container">
-    <section id="display-phones">
-
+    <section class="container">
+        <div class="w-75 input-group my-3 mx-auto">
+            <input id="search-field" type="text" class="form-control border-warning"
+                placeholder="Search your dream phone..." aria-label="Recipient's username"
+                aria-describedby="button-addon2">
+            <button onclick="searchPhone()" class="btn btn-outline-warning" type="button"
+                id="button-addon2">Search</button>
+        </div>
     </section>
-</main>
+
+    <main class="container">
+        <section>
+            <div id="display-phones" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            </div>
+        </section>
+    </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
