@@ -30,7 +30,7 @@ fetch(`https://openapi.programming-hero.com/api/phones?search=${'oppo'}`)
 const displayPhones = (parentContainer, sliced) => {
     sliced.forEach(phone => {
         const div = document.createElement('div');
-        div.classList.add('col');
+        div.classList.add('col', 'animate__animated', 'animate__backInLeft');
         div.innerHTML = `
             <div class="card h-100 shadow p-2">
             <img src="${phone.image}" class="card-img-top h-75 w-auto mx-auto" alt="${phone.phone_name}">
