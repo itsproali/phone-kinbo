@@ -143,6 +143,4 @@ const releaseDate = releaseStatus => {
 }
 
 // Display Sensor
-function getSensors(array) {
-    return array.join(', ');
-}
+const getSensors = array => array.join(', ');
