@@ -11,7 +11,7 @@ const spinner = document.getElementById('spinner');
 
 /* Load phones before Search */
 // Apple
-fetch(`https://openapi.programming-hero.com/api/phones?search=${'iphone'}`)
+fetch(`https://openapi.programming-hero.com/api/phones?search=${'apple'}`)
     .then(res => res.json())
     .then(data => displayApples(data));
 
@@ -97,12 +97,11 @@ const loadItemDetails = itemDetails => {
 
 // Display Details
 const displayItemDetails = details => {
-    console.log(details);
     location = '#item-details';
     itemDetails.textContent = '';
     itemDetails.style.display = 'block';
     const div = document.createElement('div');
-    div.classList.add('row', 'g-0', 'align-items-center')
+    div.classList.add('row', 'g-0', 'align-items-center', 'animate__animated' , 'animate__bounceInUp')
     div.innerHTML = `
     <div class="col-12 col-md-5 text-center">
         <img src="${details.image}" class="card-img-top w-75" alt="${details.name}">
@@ -117,7 +116,7 @@ const displayItemDetails = details => {
                 <li class="mb-0"><b>ChipSet:</b> ${details?.mainFeatures?.chipSet}</li>
                 <li class="mb-0"><b>Display:</b> ${details?.mainFeatures?.displaySize}</li>
                 <li class="mb-0"><b>Memory:</b> ${details?.mainFeatures?.memory}</li>
-                <li class="mb-0"><b>Sensor:</b> ${details?.mainFeatures?.sensors}</li>
+                <li class="mb-0"><b>Sensor:</b> ${getSensors(details?.mainFeatures?.sensors)}</li>
            </ul>
            <h5 class="mt-1">Others:</h5>
            <ul>
@@ -141,4 +140,9 @@ const releaseDate = releaseStatus => {
     } else {
         return releaseStatus;
     }
+}
+
+// Display Sensor
+function getSensors(array) {
+    return array.join(', ');
 }
